@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  GoogleMapsAPIDemo
 //
 //  Created by Christopher Schlitt on 3/28/17.
