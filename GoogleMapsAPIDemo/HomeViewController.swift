@@ -348,12 +348,32 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 coordinateLonOffset = coordinateLonOffset * (-1)
             }
             
-            let coordinate = CLLocationCoordinate2D(latitude: self.currentLocation.coordinate.latitude + coordinateLatOffset, longitude: self.currentLocation.coordinate.longitude + coordinateLonOffset)
+            let location = CLLocation(latitude: self.currentLocation.coordinate.latitude + coordinateLatOffset, longitude: self.currentLocation.coordinate.longitude + coordinateLonOffset)
             
-            let position = coordinate
-            let marker = GMSMarker(position: position)
-            marker.title = "\(coordinate.latitude), \(coordinate.longitude)"
-            marker.map = self.mapView
+            
+            // Reverse geocode the Address and Create the Pin
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)->Void in
+                var placemark:CLPlacemark!
+                
+                if error == nil && (placemarks?.count)! > 0 {
+                    placemark = (placemarks?[0])! as CLPlacemark
+                    
+                    let position = location.coordinate
+                    let marker = GMSMarker(position: position)
+                    marker.snippet = "\(location.coordinate.latitude), \(location.coordinate.longitude)"
+                    if(placemark.areasOfInterest != nil && placemark.areasOfInterest!.count > 0){
+                        marker.title = placemark.areasOfInterest![0]
+                    } else {
+                        marker.title = placemark.description
+                    }
+                    marker.map = self.mapView
+                }
+            })
+            
+            
+            
+            
             
         }
         
