@@ -47,7 +47,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     
     /* UI Setup Methods */
     func initializeMap() -> Void {
-        
+        // Create ma[
         let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
         self.mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
         self.mapView.isMyLocationEnabled = true
@@ -75,6 +75,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
     /* Button Actions */
     @IBAction func backButtonPressed(_ sender: Any) {
         if(self.showingServiceDetail){
+            // Hide request button, go back
             UIView.animate(withDuration: 0.5, animations: {
                 for constraint in self.requestButton.constraints {
                     if(constraint.identifier == "buttonBottomConstraint"){
@@ -86,6 +87,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
                 self.requestButton.removeFromSuperview()
             })
         } else {
+            // Toggle locations bar
             if(self.showingLocationsBar){
                 self.hideLocationsBar()
             } else {
@@ -96,6 +98,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
     }
     @IBAction func currentLocationButtonPressed(_ sender: Any) {
+        // Get current location
         self.showingCurrentLocation = true
         self.mapView.isMyLocationEnabled = true
         self.locationManager.requestLocation()
@@ -103,6 +106,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.hideSearchButtons()
     }
     @IBAction func philadelphiaButtonPressed(_ sender: Any) {
+        // Change to Philadelphia
         self.showingCurrentLocation = false
         self.mapView.isMyLocationEnabled = false
         self.currentLocation = CLLocation(latitude: 39.952447, longitude: -75.163930)
@@ -111,6 +115,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.placeCustomLocationMarker()
     }
     
+    // Place a custom marker on the map (currently Philadelphia)
     func placeCustomLocationMarker(){
         let marker = GMSMarker()
         marker.icon = GMSMarker.markerImage(with: .blue)
@@ -225,17 +230,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         return cell
     }
     
-    func handleTap(_ sender: UITapGestureRecognizer? = nil) {
-        // handling code
-        print("Tapped")
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! ServiceCell
         let cellData = self.searchButtonData[indexPath.row]
         
+        // Get a list of places to show on the map
         self.requestPlaces(cellData.search)
         
+        // Create the request button
         self.requestButton = UIView(frame: cell.frame)
         self.requestButton.translatesAutoresizingMaskIntoConstraints = false
         self.requestButton.layer.cornerRadius = 32.5
@@ -243,44 +245,40 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.requestButton.layer.borderColor = cell.backgroundColor!.lighter(by: 10.0)?.cgColor
         self.requestButton.layer.borderWidth = 1.5
         
-        
-        
+        // Create the image for the reset button
         let image = UIImageView(frame: cell.image.frame)
         image.image = UIImage(named: cellData.image)
         image.translatesAutoresizingMaskIntoConstraints = false
         self.requestButton.addSubview(image)
         
+        // Create the label for the reset button
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont(name: "SFUIDisplay-Semibold", size: 18.0)
         
+        self.view.addSubview(self.requestButton)
+        self.hideSearchButtons()
+        
+        // Position the image
         let imageHeightConstraint = NSLayoutConstraint(item: image, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30.0)
         let imageWidthConstraint = NSLayoutConstraint(item: image, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30.0)
-        let imageCenterXConstraint = NSLayoutConstraint(item: image, attribute: .centerX, relatedBy: .equal, toItem: self.requestButton, attribute: .centerX, multiplier: 1.0, constant: 0.0)
         let imageCenterYConstraint = NSLayoutConstraint(item: image, attribute: .centerY, relatedBy: .equal, toItem: self.requestButton, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        NSLayoutConstraint.activate([imageHeightConstraint, imageWidthConstraint, imageCenterXConstraint, imageCenterYConstraint])
+        let imageLeadingConstraint = NSLayoutConstraint(item: image, attribute: .leading, relatedBy: .equal, toItem: self.requestButton, attribute: .leading, multiplier: 1.0, constant: 32.5)
         
-        
-        self.view.addSubview(self.requestButton)
-        
+        // Position the request button
         let heightConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 65.0)
         let widthConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 65.0)
         let bottomConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: -10.0)
         
         let leadingPrevConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .leading, relatedBy: .equal, toItem: cell, attribute: .leading, multiplier: 1.0, constant: 0.0)
+        NSLayoutConstraint.activate([imageHeightConstraint, imageWidthConstraint, imageCenterYConstraint, heightConstraint, widthConstraint, bottomConstraint, leadingPrevConstraint, imageLeadingConstraint])
         
-        NSLayoutConstraint.activate([heightConstraint, widthConstraint, bottomConstraint, leadingPrevConstraint])
-        self.hideSearchButtons()
-        
-        imageCenterXConstraint.isActive = false
-        let imageLeadingConstraint = NSLayoutConstraint(item: image, attribute: .leading, relatedBy: .equal, toItem: self.requestButton, attribute: .leading, multiplier: 1.0, constant: 32.5)
-        NSLayoutConstraint.activate([imageLeadingConstraint])
-        
+        // Animate the Button
         UIView.animate(withDuration: 0.2, animations: {
+            // Expand the width of the button
             widthConstraint.isActive = false
             leadingPrevConstraint.isActive = false
             bottomConstraint.isActive = false
-            
             
             let leadingConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 25.0)
             let trailingConstraint = NSLayoutConstraint(item: self.requestButton, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1.0, constant: -25.0)
@@ -291,6 +289,7 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             self.requestButton.setNeedsLayout()
             self.requestButton.layoutIfNeeded()
             
+            // Position the label
             label.translatesAutoresizingMaskIntoConstraints = false
             self.requestButton.addSubview(label)
             label.textColor = UIColor.groupTableViewBackground
@@ -302,22 +301,16 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
             
             NSLayoutConstraint.activate([labelTopConstraint, labelBottomConstraint, labelTrailingConstraint, labelLeadingConstraint])
             
-            
-            
         }, completion: {(_ success) -> Void in
-            
-            
-            
+            // Change the label text
             UIView.animate(withDuration: 0.1, animations: {
-                // label.setTitle("Request Beer", for: .normal)
                 label.text = "Request " + cellData.search
             })
-            
-            
         })
  
     }
     
+    // Report the device's location to Google Maps
     func reportDevice(){
         googlePlacesClient?.currentPlace(callback: { (placeLikelihoodList, error) -> Void in
             if let error = error {
@@ -366,15 +359,6 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         
         
     }
-    
-    /*
-    let position = CLLocationCoordinate2D(latitude: 10, longitude: 10)
-    let marker = GMSMarker(position: position)
-    marker.title = "Hello World"
-    marker.map = mapView
-    */
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -436,23 +420,14 @@ class HomeViewController: UIViewController, CLLocationManagerDelegate, UICollect
         self.searchButtonsCollectionView.dataSource = self
         
         
-        // Setup Various UI Colors and Fonts
+        // Setup Various UI Colors and Fonts, and map
         DispatchQueue.main.async {
             self.locationsBar.tintColor = UIColor.hexStringToUIColor(hex: "3F4279").darker(by: 5.0)
             self.currentLocationButton.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "SFUIDisplay-Regular", size: 18)!], for: .normal)
             self.philadelphiaButton.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "SFUIDisplay-Regular", size: 18)!], for: .normal)
             self.backButton.setTitleTextAttributes([ NSFontAttributeName: UIFont(name: "SFUIDisplay-Regular", size: 16.0)!], for: .normal)
-        }
-        
-        
-        
-        // Setup Map
-        DispatchQueue.main.async {
             self.initializeMap()
         }
-        
-        
-        
         
     }
 
@@ -492,26 +467,27 @@ extension UIColor {
             alpha: CGFloat(1.0)
         )
     }
-        
-        public func lighter(by percentage:CGFloat=30.0) -> UIColor? {
-            return self.adjust(by: abs(percentage) )
+    
+    public func lighter(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: abs(percentage) )
+    }
+    
+    public func darker(by percentage:CGFloat=30.0) -> UIColor? {
+        return self.adjust(by: -1 * abs(percentage) )
+    }
+    
+    public func adjust(by percentage:CGFloat=30.0) -> UIColor? {
+        var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
+        if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
+            return UIColor(red: min(r + percentage/100, 1.0),
+                           green: min(g + percentage/100, 1.0),
+                           blue: min(b + percentage/100, 1.0),
+                           alpha: a)
+        } else {
+            return nil
         }
-        
-        public func darker(by percentage:CGFloat=30.0) -> UIColor? {
-            return self.adjust(by: -1 * abs(percentage) )
-        }
-        
-        public func adjust(by percentage:CGFloat=30.0) -> UIColor? {
-            var r:CGFloat=0, g:CGFloat=0, b:CGFloat=0, a:CGFloat=0;
-            if(self.getRed(&r, green: &g, blue: &b, alpha: &a)){
-                return UIColor(red: min(r + percentage/100, 1.0),
-                               green: min(g + percentage/100, 1.0),
-                               blue: min(b + percentage/100, 1.0),
-                               alpha: a)
-            } else {
-                return nil
-            }
-        }
+    }
+    
 }
 
 

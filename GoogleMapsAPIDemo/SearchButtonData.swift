@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+/*
+ * A class to hold information about each service category
+ *
+ */
 class SearchButtonData {
     
     var image: String

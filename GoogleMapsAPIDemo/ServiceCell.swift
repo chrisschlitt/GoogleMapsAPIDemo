@@ -16,6 +16,7 @@ class ServiceCell: UICollectionViewCell {
     /* UI Outlets */
     @IBOutlet weak var image: UIImageView!
     
+    // Build UI
     func refreshUI(){
         DispatchQueue.main.async {
             self.image.image = UIImage(named: self.data.image)
