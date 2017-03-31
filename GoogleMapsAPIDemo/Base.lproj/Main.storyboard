@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="GoogleMapsAPIDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LRP-Ue-4yY">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ajo-kb-5Ku"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="fJO-vL-0QC">
+                                        <barButtonItem key="leftBarButtonItem" title="Current Location" id="FFq-Fh-nH5">
+                                            <connections>
+                                                <action selector="currentLocationButtonPressed:" destination="BYZ-38-t0r" id="lb2-z2-1SI"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Philadelphia" id="wdd-mX-sZc">
+                                            <connections>
+                                                <action selector="philadelphiaButtonPressed:" destination="BYZ-38-t0r" id="yVH-e5-EV5"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nD1-1Q-EyI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="qpD-dR-dB9"/>
+                                </constraints>
+                                <color key="barTintColor" red="0.24705882352941178" green="0.25882352941176467" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Maps" id="9nf-xg-A8o">
+                                        <barButtonItem key="leftBarButtonItem" title="Locations" id="Ujb-bV-RMP">
+                                            <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <connections>
+                                                <action selector="backButtonPressed:" destination="BYZ-38-t0r" id="PUK-ir-KSw"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ovn-1B-Pcz">
+                                <rect key="frame" x="0.0" y="582" width="375" height="85"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Pej-FV-olI">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="5" minimumInteritemSpacing="15" id="JBQ-iX-rq9">
+                                            <size key="itemSize" width="65" height="65"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="14" minY="4" maxX="14" maxY="4"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Search Button" id="q6r-EM-bly" customClass="ServiceCell" customModule="GoogleMapsAPIDemo" customModuleProvider="target">
+                                                <rect key="frame" x="14" y="10" width="65" height="65"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="beer.png" translatesAutoresizingMaskIntoConstraints="NO" id="Log-N7-AIJ">
+                                                            <rect key="frame" x="17.5" y="17.5" width="30" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="Z9S-E3-BLR"/>
+                                                                <constraint firstAttribute="width" constant="30" id="qMh-bF-3rL"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </view>
+                                                <color key="backgroundColor" red="0.50196078430000002" green="0.090196078430000007" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstItem="Log-N7-AIJ" firstAttribute="centerX" secondItem="q6r-EM-bly" secondAttribute="centerX" id="amN-hC-gf3"/>
+                                                    <constraint firstItem="Log-N7-AIJ" firstAttribute="centerY" secondItem="q6r-EM-bly" secondAttribute="centerY" id="cPi-BT-Nsw"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="image" destination="Log-N7-AIJ" id="6Ja-kA-hiH"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Pej-FV-olI" firstAttribute="leading" secondItem="ovn-1B-Pcz" secondAttribute="leading" id="4gi-Yb-dSq"/>
+                                    <constraint firstAttribute="height" constant="85" id="BEp-fe-S3v"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pej-FV-olI" secondAttribute="trailing" id="R1b-nm-Ijm"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pej-FV-olI" secondAttribute="bottom" id="bpK-tZ-9v2"/>
+                                    <constraint firstItem="Pej-FV-olI" firstAttribute="top" secondItem="ovn-1B-Pcz" secondAttribute="top" id="nYs-W6-HOA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.24705882352941178" green="0.25882352941176467" blue="0.47450980392156861" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="nD1-1Q-EyI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="7AR-HM-xdA"/>
+                            <constraint firstItem="LRP-Ue-4yY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="A50-At-2Yc"/>
+                            <constraint firstAttribute="trailing" secondItem="LRP-Ue-4yY" secondAttribute="trailing" id="BnU-mj-UHq"/>
+                            <constraint firstItem="LRP-Ue-4yY" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" identifier="locationsBarTop" id="Gnh-Ji-aWI"/>
+                            <constraint firstAttribute="trailing" secondItem="ovn-1B-Pcz" secondAttribute="trailing" id="f4q-3f-KdG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ovn-1B-Pcz" secondAttribute="bottom" placeholder="YES" id="inV-eY-T9T"/>
+                            <constraint firstAttribute="trailing" secondItem="nD1-1Q-EyI" secondAttribute="trailing" id="mFP-oC-A8N"/>
+                            <constraint firstAttribute="bottom" secondItem="ovn-1B-Pcz" secondAttribute="bottom" priority="999" constant="-90" id="tSL-RG-PHY"/>
+                            <constraint firstItem="nD1-1Q-EyI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vrC-yG-4gH"/>
+                            <constraint firstItem="ovn-1B-Pcz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="wnT-XO-Djq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="Ujb-bV-RMP" id="Wfl-zQ-Bi0"/>
+                        <outlet property="currentLocationButton" destination="FFq-Fh-nH5" id="wYf-Ng-zKG"/>
+                        <outlet property="locationsBar" destination="LRP-Ue-4yY" id="i8E-E6-Hof"/>
+                        <outlet property="navBar" destination="nD1-1Q-EyI" id="qKB-nd-XzE"/>
+                        <outlet property="philadelphiaButton" destination="wdd-mX-sZc" id="ycV-3Y-VTQ"/>
+                        <outlet property="searchButtonsCollectionView" destination="Pej-FV-olI" id="xT3-Mc-UGV"/>
+                        <outlet property="searchButtonsContainer" destination="ovn-1B-Pcz" id="Aga-qb-c5g"/>
+                        <outlet property="tmpSearchButtonsConstraint" destination="tSL-RG-PHY" id="1Bg-th-oWd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="beer.png" width="50" height="50"/>
+    </resources>
+</document>
